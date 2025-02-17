@@ -1,3 +1,4 @@
 /target
 .vscode
 notebooks/.ipbynb_checkpoints
+.idea
