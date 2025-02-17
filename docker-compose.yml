@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  jupyter:
+    image: jupyter/base-notebook:latest  # Use the appropriate Jupyter image
+    ports:
+      - "8888:8888"  # Map the host port 8888 to the container port 8888
+    volumes:
+      - ./notebooks:/home/jovyan/work  # Mount the local directory `./notebooks` to the container
+    environment:
+      - JUPYTER_ENABLE_LAB=yes  # Optional: Enables JupyterLab instead of the classic notebook interface
+    command: start-notebook.sh
