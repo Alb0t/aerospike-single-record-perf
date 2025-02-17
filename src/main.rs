@@ -1,10 +1,10 @@
 #[macro_use]
 extern crate aerospike;
-extern crate chrono; 
+extern crate chrono;
 use chrono::prelude::*;
-use std::{env, thread::sleep};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
+use std::{env, thread::sleep};
 
 use aerospike::{Client, ClientPolicy, WritePolicy};
 use rand::{self, Rng, RngCore};
@@ -16,14 +16,10 @@ fn main() {
         ..Default::default()
     };
 
-    let hosts = env::var("AEROSPIKE_HOSTS")
-        .unwrap_or_else(|_| String::from("127.0.0.1:3100"));
+    let hosts = env::var("AEROSPIKE_HOSTS").unwrap_or_else(|_| String::from("127.0.0.1:3100"));
 
     // Wrap the Aerospike client in an Arc for thread-safe shared access
-    let client = Arc::new(
-        Client::new(&cpolicy, &hosts).expect("Failed to connect to cluster"),
-    );
-
+    let client = Arc::new(Client::new(&cpolicy, &hosts).expect("Failed to connect to cluster"));
 
     let thread_count = 64; // Number of threads to spawn
 
@@ -64,7 +60,7 @@ fn main() {
                         }
                     }
                     Err(e) => {
-                            if count % 100 == 0 {
+                        if count % 100 == 0 {
                             let epoch_time = Utc::now().timestamp();
                             println!("Result:ERR,EpochTime:{},Thread:{},Count:{},BlobSize:{},PutTimeMicroseconds:{:?}",
                                 epoch_time,
@@ -79,7 +75,7 @@ fn main() {
 
                 // Update counters
                 count += 1;
-                blob_size = (elapsed_seconds * 1024 ) as usize; // Increase blob size for the next iteration
+                blob_size = (elapsed_seconds * 1024) as usize; // Increase blob size for the next iteration
             }
         });
 
